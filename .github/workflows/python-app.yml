@@ -43,4 +43,4 @@ jobs:
     #     pytest
     - name: Run FastAPI app
       run: |
-        uvicorn main:app --host
+        uvicorn main:app --reload
