@@ -1,0 +1,30 @@
+import os
+from fastapi import FastAPI
+from motor.motor_asyncio import AsyncIOMotorClient
+from dotenv import load_dotenv
+# from pymongo import MongoClient
+
+app = FastAPI()
+load_dotenv()
+
+client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
+db = client.get_database("FastAPI_GitAct")
+
+@app.get("/")
+async def tester():
+    return {"collection": await db.list_collection_names()}
+
+
+@app.post("/add_item/")
+async def create_item(item: dict):
+    result = await db.items.insert_one(item)
+    return {"inserted_id": str(result.inserted_id)}
+
+@app.get("/get_items/")
+async def read_items():
+    items = []
+    cursor = db.items.find({})
+    async for document in cursor:
+        document["_id"] = str(document["_id"])  # Convert ObjectId to string
+        items.append(document)
+    return items
