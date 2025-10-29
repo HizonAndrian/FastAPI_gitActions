@@ -7,7 +7,13 @@ from dotenv import load_dotenv
 app = FastAPI()
 load_dotenv()
 
-client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
+mongo_username = os.getenv("MONGO_USERNAME")
+mongo_password = os.getenv("MONGO_PASSWORD")
+mongo_host = os.getenv("MONGO_HOST")
+
+MONGO_URI = f"mongodb+srv://{mongo_username}:{mongo_password}@{mongo_host}/?appName=Cluster0"
+
+client = AsyncIOMotorClient(MONGO_URI)
 db = client.get_database("FastAPI_GitAct")
 
 @app.get("/")
