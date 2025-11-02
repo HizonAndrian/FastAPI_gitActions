@@ -35,12 +35,47 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - name: Run FastAPI app
       run: |
         uvicorn main:app --host 0.0.0.0 --port $Port --timeout-keep-alive 5 &
         sleep 5
         echo "FastAPI app is running"
 
+  test:
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
         pytest --maxfail=1 --disable-warnings -q > pytest-result.txt
