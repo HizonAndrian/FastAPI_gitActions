@@ -11,15 +11,14 @@ on:
 permissions:
   contents: read
 
-jobs:
-  build:
-
-    env:
+env:
       MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
       MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
       MONGO_HOST: cluster0.mrt5ygm.mongodb.net
       Port: 8000
-      
+
+jobs:
+  build:      
     runs-on: ubuntu-latest
 
     steps:
