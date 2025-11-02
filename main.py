@@ -11,10 +11,12 @@ mongo_username = os.getenv("MONGO_USERNAME")
 mongo_password = os.getenv("MONGO_PASSWORD")
 mongo_host = os.getenv("MONGO_HOST")
 
-MONGO_URI = f"mongodb+srv://{mongo_username}:{mongo_password}@{mongo_host}/?appName=Cluster0"
-
-client = AsyncIOMotorClient(MONGO_URI)
-db = client.get_database("FastAPI_GitAct")
+if mongo_username and mongo_password:
+    MONGO_URI = f"mongodb+srv://{mongo_username}:{mongo_password}@{mongo_host}/?appName=Cluster0"
+    client = AsyncIOMotorClient(MONGO_URI)
+    db = client.get_database("FastAPI_GitAct")
+else:
+    client = None
 
 @app.get("/")
 async def tester():
