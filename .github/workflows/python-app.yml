@@ -85,7 +85,7 @@ jobs:
         pytest --maxfail=1 --disable-warnings -q > pytest-result.txt
 
     - name: Upload test results
-      if: steps.pytest.outcome != 'success'
+      if: failure() && steps.pytest.outcome != 'success'
       uses: actions/upload-artifact@v4
       with:
         name: pytest-result
