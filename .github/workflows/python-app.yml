@@ -44,11 +44,12 @@ jobs:
 
     - name: Test with pytest
       run: |
-        pytest
+        pytest --maxfail=1 --disable-warnings -q | tee pytest-result.txt
 
-    - name: Upload test results.
+    - name: Upload test results
       uses: actions/upload-artifact@v4
       with:
         name: pytest-result
-        path: ./pytest-result.txt
+        path: pytest-result.txt
+
 
