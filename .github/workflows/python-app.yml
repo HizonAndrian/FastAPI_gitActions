@@ -5,17 +5,18 @@ on:
     branches: [ "master" ]
   workflow_dispatch:
 
-env:
-  MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
-  MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-  MONGO_HOST: cluster0.mrt5ygm.mongodb.net
-  Port: 8000
-
 permissions:
   contents: read
 
 jobs:
-  build:      
+  build:
+
+    env:
+      MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+      MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+      MONGO_HOST: cluster0.mrt5ygm.mongodb.net
+      Port: 8000
+      
     runs-on: ubuntu-latest
 
     steps:
