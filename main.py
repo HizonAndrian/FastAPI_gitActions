@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 app = FastAPI()
 load_dotenv()
 
-mongo_username = os.getenv("MONGO_USERNAM")
+mongo_username = os.getenv("MONGO_USERNAME")
 mongo_password = os.getenv("MONGO_PASSWORD")
 mongo_host = os.getenv("MONGO_HOST")
 
